@@ -25,6 +25,8 @@ qt_add_qml_module(appRubik
     #assets/untitled.obj
     #assets/untitled.fbx
     assets/meshes/cube.mesh
+    QML_FILES controls/OrientationGrid.qml
+    RESOURCES .gitignore
 )
 
 set_target_properties(appRubik PROPERTIES

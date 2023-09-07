@@ -3,11 +3,12 @@
 import QtQuick
 import QtQuick3D
 import QtQuick3D.Particles3D
-import QtQuick.Controls
+import QtQuick.Controls 2.15
 import QtQuick.Timeline
 import QtQuick.Layouts
-import Qt3D.Extras 2.15
+
 import "comps"
+import "controls"
 
 Window
 {
@@ -48,24 +49,102 @@ Window
         }
     }
 
-    function rotateTop() {
-        for (var i = 0; i<9; i++) {
-            if (cubeModel.get(i).xr == 90 ) {
-                cubeModel.setProperty(i, "xr", 0)
-                cubeModel.setProperty(i, "yr", 0)
-                cubeModel.setProperty(i, "zr", 0)
-            } else {
-                cubeModel.setProperty(i, "xr", 90)
-                cubeModel.setProperty(i, "yr", 90)
-                cubeModel.setProperty(i, "zr", 90)
+    function rotateLeft() {
+        for (var i = 0; i<cubeModel.count; i++) {
+            const x = cubeModel.get(i).x
+            const y = cubeModel.get(i).y
+            const z = cubeModel.get(i).z
+            const xr = cubeModel.get(i).xr
+
+            if (x === 0) {
+                if (y === 0 && z === 0) {
+                    cubeModel.setProperty(i, "y", 10)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (y === 5 && z === 0) {
+                    cubeModel.setProperty(i, "y", 10)
+                    cubeModel.setProperty(i, "z", 5)
+                } else if (y === 10 && z === 0) {
+                    cubeModel.setProperty(i, "y", 10)
+                    cubeModel.setProperty(i, "z", 10)
+                } else if (y === 0 && z === 5) {
+                    cubeModel.setProperty(i, "y", 5)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (y === 10 && z === 5) {
+                    cubeModel.setProperty(i, "y", 5)
+                    cubeModel.setProperty(i, "z", 10)
+                } else if (y === 0 && z === 10) {
+                    cubeModel.setProperty(i, "y", 0)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (y === 5 && z === 10) {
+                    cubeModel.setProperty(i, "y", 0)
+                    cubeModel.setProperty(i, "z", 5)
+                } else if (y === 10 && z === 10) {
+                    cubeModel.setProperty(i, "y", 0)
+                    cubeModel.setProperty(i, "z", 10)
+                }
+
+                if (xr === 360) {
+                    cubeModel.setProperty(i, "xr", 90)
+                } else {
+                    cubeModel.setProperty(i, "xr", xr + 90)
                 }
             }
+
+
+        }
+    }
+
+    function rotateTop() {
+
+
+        var count = 0
+
+        for (var i = 0; i < cubeModel.count; i++) {
+            const x = cubeModel.get(i).x
+            const y = cubeModel.get(i).y
+            const z = cubeModel.get(i).z
+            const yr = cubeModel.get(i).yr
+
+
+            if (y === 10) {
+                if (x === 0 && z === 0) {
+                    cubeModel.setProperty(i, "x", 10)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (x === 5 && z === 0) {
+                    cubeModel.setProperty(i, "x", 10)
+                    cubeModel.setProperty(i, "z", 5)
+                } else if (x === 10 && z === 0) {
+                    cubeModel.setProperty(i, "x", 10)
+                    cubeModel.setProperty(i, "z", 10)
+                } else if (x === 0 && z === 5) {
+                    cubeModel.setProperty(i, "x", 5)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (x === 10 && z === 5) {
+                    cubeModel.setProperty(i, "x", 5)
+                    cubeModel.setProperty(i, "z", 10)
+                } else if (x === 0 && z === 10) {
+                    cubeModel.setProperty(i, "x", 0)
+                    cubeModel.setProperty(i, "z", 0)
+                } else if (x === 5 && z === 10) {
+                    cubeModel.setProperty(i, "x", 0)
+                    cubeModel.setProperty(i, "z", 5)
+                } else if (x === 10 && z === 10) {
+                    cubeModel.setProperty(i, "x", 0)
+                    cubeModel.setProperty(i, "z", 10)
+                }
+
+                if (yr === 0) {
+                    cubeModel.setProperty(i, "yr", 270)
+                } else {
+                    cubeModel.setProperty(i, "yr", yr - 90)
+                }
+            }
+        }
     }
 
     Component.onCompleted: {
         fillModel()
     }
-
 
     View3D {
         id: view
@@ -83,6 +162,9 @@ Window
             id: cubeRepeater
             model: cubeModel
 
+            pivot: Qt.vector3d(0, 0 , 0)
+            position: Qt.vector3d(0, 0 , 0)
+
             Cube {
                 id: cube
                     x: model.x
@@ -93,7 +175,8 @@ Window
                     property int zr: model.zr
                     eulerRotation: Qt.vector3d(xr, yr, zr)
 
-                    pivot: Qt.vector3d(10, 0, 0)
+                    //pivot: Qt.vector3d(10, 0, 0)
+                    //position: Qt.vector3d(0, 0, 0)
 
 
                     Behavior on xr {
@@ -109,6 +192,24 @@ Window
                     }
 
                     Behavior on zr {
+                        NumberAnimation {
+                            duration: 1000
+                        }
+                    }
+
+                    Behavior on x {
+                        NumberAnimation {
+                            duration: 1000
+                        }
+                    }
+
+                    Behavior on y {
+                        NumberAnimation {
+                            duration: 1000
+                        }
+                    }
+
+                    Behavior on z {
                         NumberAnimation {
                             duration: 1000
                         }
@@ -136,18 +237,47 @@ Window
 
         }
 
-        Rectangle {
-            anchors.bottom: parent.bottom
-            height: 50
-            width: height
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    rotateTop()
-                    console.log("clicked")
+        Column {
+            Rectangle {
+                //anchors.bottom: parent.bottom
+                height: 50
+                width: height
+
+                Text {
+                    text: "R"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        rotateLeft()
+                    }
+                }
+            }
+
+            Rectangle {
+                //anchors.bottom: parent.bottom
+                height: 50
+                width: height
+
+                Text {
+                    text: "T"
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        rotateTop()
+                    }
                 }
             }
         }
+
+        OrientationGrid {
+            anchors.bottom: parent.bottom
+        }
+
+
 
 
         Node {
@@ -163,15 +293,15 @@ Window
             eulerRotation: Qt.vector3d(2*rot, rot, rot)
             PerspectiveCamera {
                 id: pCam
-                x: 50
+                x: -50
                 y: 20
-                z: 20
+                z: 60
                 lookAtNode: cubeRepeater
             }
 
-            OrbitCameraController {
-                //camera: pCam
-            }
+//            OrbitCameraController {
+//                camera: pCam
+//            }
         }
 
 
@@ -181,6 +311,26 @@ Window
         }
 
 
+        // Connect mouse events to control rotation
+        /*MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            //drag.target: view
+
+            property real lastMouseX: 0
+            property real lastMouseY: 0
+
+            onPositionChanged: {
+                console.log("new ")
+                var dx = mouseX - mouseArea.lastMouseX;
+                var dy = mouseY - mouseArea.lastMouseY;
+                cubeRepeater.eulerRotation.x += dy;
+                cubeRepeater.eulerRotation.y += dx;
+                mouseArea.lastMouseX = mouseX;
+                mouseArea.lastMouseY = mouseY;
+            }
+        }*/
     }
 
 

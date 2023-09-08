@@ -27,6 +27,7 @@ qt_add_qml_module(appRubik
     assets/meshes/cube.mesh
     QML_FILES controls/OrientationGrid.qml
     RESOURCES .gitignore
+    QML_FILES controls/CubeControls.qml
 )
 
 set_target_properties(appRubik PROPERTIES

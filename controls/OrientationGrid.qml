@@ -7,9 +7,10 @@ Item {
     height: 130
 
     signal topClicked
-    signal leftCicked
+    signal leftClicked
     signal rightClicked
     signal downClicked
+    signal reorientClicked
 
     Rectangle {
         anchors.fill: parent
@@ -55,6 +56,15 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
 
         onClicked: rightClicked()
+    }
+
+    Button {
+        width: 50
+        height: 50
+
+        anchors.centerIn: parent
+
+        onClicked: reorientClicked()
     }
 
 }

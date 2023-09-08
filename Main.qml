@@ -6,6 +6,8 @@ import QtQuick3D.Particles3D
 import QtQuick.Controls 2.15
 import QtQuick.Timeline
 import QtQuick.Layouts
+import QtQuick3D.Helpers
+
 
 import "comps"
 import "controls"
@@ -24,25 +26,11 @@ Window
 
 
     function fillModel () {
-        var color1 = "white"
-        var color2 = "white"
-        var color3 = "white"
         for (var i=0; i<=2; i++) {
             for (var j = 0; j<=2; j++) {
                 for (var k = 0; k<=2; k++) {
-                    if (k==0) {
-                        color3 = "blue"
-                    } else {
-                        color3 = "white"
-                    }
-
                     cubeModel.append({x: i*5, y: j*5, z: k*5,
-                                        color1: color1,
-                                        color2: color2,
-                                        color3: color3,
-                                        xr: 0,
-                                        yr: 0,
-                                        zr: 0})
+                                         xr: 0, yr: 0, zr: 0})
                 }
             }
 
@@ -83,11 +71,7 @@ Window
                     cubeModel.setProperty(i, "z", 10)
                 }
 
-                if (xr === 360) {
-                    cubeModel.setProperty(i, "xr", 90)
-                } else {
-                    cubeModel.setProperty(i, "xr", xr + 90)
-                }
+                cubeModel.setProperty(i, "xr", xr + 90)
             }
 
 
@@ -132,15 +116,11 @@ Window
                     cubeModel.setProperty(i, "x", 0)
                     cubeModel.setProperty(i, "z", 10)
                 }
-
-                if (yr === 0) {
-                    cubeModel.setProperty(i, "yr", 270)
-                } else {
-                    cubeModel.setProperty(i, "yr", yr - 90)
-                }
+                cubeModel.setProperty(i, "yr", yr - 90)
             }
         }
     }
+
 
     Component.onCompleted: {
         fillModel()
@@ -148,165 +128,133 @@ Window
 
     View3D {
         id: view
-        anchors.fill: parent
+        //anchors.fill: parent
+        anchors.top: parent.top
+        width: parent.width
+        height: 340
 
 
 
-        PointLight {
-            color: "red"
-            ambientColor: "yellow"
-            brightness: 2.0
-        }
+//        PointLight {
+//            color: "red"
+//            ambientColor: "yellow"
+//            brightness: 2.0
+//        }
 
         Repeater3D {
             id: cubeRepeater
             model: cubeModel
 
-            pivot: Qt.vector3d(0, 0 , 0)
-            position: Qt.vector3d(0, 0 , 0)
+            pivot: Qt.vector3d(5, 5 , 5)
+            //position: Qt.vector3d(0, 0 , 0)
+
+            property int cubeXR : 0
+            property int cubeYR : 0
+            property int cubeZR : 0
+
+            eulerRotation: Qt.vector3d(cubeXR, cubeYR, cubeZR)
+
+            Behavior on cubeXR {
+                NumberAnimation {
+                    duration: 1000
+                }
+            }
+
+            Behavior on cubeYR {
+                NumberAnimation {
+                    duration: 1000
+                }
+            }
 
             Cube {
                 id: cube
-                    x: model.x
-                    y: model.y
-                    z: model.z
-                    property int xr: model.xr
-                    property int yr: model.yr
-                    property int zr: model.zr
-                    eulerRotation: Qt.vector3d(xr, yr, zr)
+                x: model.x
+                y: model.y
+                z: model.z
+                property int xr: model.xr
+                property int yr: model.yr
+                property int zr: model.zr
+                eulerRotation: Qt.vector3d(xr, yr, zr)
 
-                    //pivot: Qt.vector3d(10, 0, 0)
-                    //position: Qt.vector3d(0, 0, 0)
-
-
-                    Behavior on xr {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
-
-                    Behavior on yr {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
-
-                    Behavior on zr {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
-
-                    Behavior on x {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
-
-                    Behavior on y {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
-
-                    Behavior on z {
-                        NumberAnimation {
-                            duration: 1000
-                        }
-                    }
+                //pivot: Qt.vector3d(10, 0, 0)
+                //position: Qt.vector3d(0, 0, 0)
 
 
-                    //rotation: 90
-//                    front_t: model.color1
-//                    front_b: model.color2
-//                    left: model.color3
-
-
-                }
-
-//            SequentialAnimation on eulerRotation.x {
-//                id: cubeAnimation1
-//                loops: Animation.Infinite
-//                running: false
-//                    PropertyAnimation {
-//                        duration: 5000
-//                        from: 0
-//                        to: 90
-//                    }
-//                }
-
-        }
-
-        Column {
-            Rectangle {
-                //anchors.bottom: parent.bottom
-                height: 50
-                width: height
-
-                Text {
-                    text: "R"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        rotateLeft()
+                Behavior on x {
+                    NumberAnimation {
+                        duration: 200
+                        //easing.type: Easing.OutQuint
                     }
                 }
-            }
 
-            Rectangle {
-                //anchors.bottom: parent.bottom
-                height: 50
-                width: height
-
-                Text {
-                    text: "T"
+                Behavior on y {
+                    NumberAnimation {
+                        duration: 200
+                    }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        rotateTop()
+                Behavior on z {
+                    NumberAnimation {
+                        duration: 200
+                    }
+                }
+                Behavior on xr {
+                    NumberAnimation {
+                        duration: 200
+                    }
+                }
+
+                Behavior on yr {
+                    NumberAnimation {
+                        duration: 200
+                    }
+                }
+
+                Behavior on zr {
+                    NumberAnimation {
+                        duration: 200
                     }
                 }
             }
         }
-
-        OrientationGrid {
-            anchors.bottom: parent.bottom
-        }
-
-
-
 
         Node {
-            property real rot: 0.0
-            PropertyAnimation on rot {
-                from: 0.0
-                to: 360.0
-                duration: 10000
-                loops: Animation.Infinite
-                running: false
-                //paused: !checkBoxRotateCamera.checked
-            }
-            eulerRotation: Qt.vector3d(2*rot, rot, rot)
             PerspectiveCamera {
                 id: pCam
-                x: -50
+                x: 20
                 y: 20
-                z: 60
+                z: 20
                 lookAtNode: cubeRepeater
             }
-
-//            OrbitCameraController {
-//                camera: pCam
-//            }
         }
 
+        /*DirectionalLight {
+            id: light1
+            color: "white"//Qt.rgba(1.0, 0.1, 0.1, 1.0)
+            ambientColor: Qt.rgba(0.1, 0.1, 0.1, 1.0)
+            position: Qt.vector3d(0, 20, 0)
+            rotation: Quaternion.fromEulerAngles(0, 0, 0)
+            shadowMapQuality: Light.ShadowMapQualityHigh
+            visible: true
+            castsShadow: true
+            brightness: 50
+            SequentialAnimation on rotation {
+                loops: Animation.Infinite
+                QuaternionAnimation {
+                    to: Quaternion.fromEulerAngles(-45, -90, 0)
+                    duration: 2000
+                    easing.type: Easing.InOutQuad
+                }
+                QuaternionAnimation {
+                    to: Quaternion.fromEulerAngles(-135, -90, 0)
+                    duration: 2000
+                    easing.type: Easing.InOutQuad
+                }
+            }
+        }*/
 
         environment: SceneEnvironment {
-            clearColor: "darkGray"
+            clearColor: "#4a4a4a"
             backgroundMode: SceneEnvironment.Color
         }
 
@@ -322,16 +270,43 @@ Window
             property real lastMouseY: 0
 
             onPositionChanged: {
-                console.log("new ")
                 var dx = mouseX - mouseArea.lastMouseX;
                 var dy = mouseY - mouseArea.lastMouseY;
-                cubeRepeater.eulerRotation.x += dy;
-                cubeRepeater.eulerRotation.y += dx;
+                cubeRepeater.cubeXR += dy;
+                cubeRepeater.cubeYR += dx;
                 mouseArea.lastMouseX = mouseX;
                 mouseArea.lastMouseY = mouseY;
             }
         }*/
     }
 
+    OrientationGrid {
+        anchors.bottom: parent.bottom
+
+        onTopClicked: cubeRepeater.cubeXR += 90
+        onDownClicked: cubeRepeater.cubeXR -= 90
+        onLeftClicked: cubeRepeater.cubeYR += 90
+        onRightClicked: cubeRepeater.cubeYR -= 90
+        onReorientClicked: {cubeRepeater.cubeXR = 0; cubeRepeater.cubeYR = 0;}
+    }
+
+    CubeControls {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+
+        onButtonClicked: (name) => {
+            switch (name) {
+            case "R": {
+                rotateLeft()
+                break;
+            }
+
+            case "T": {
+                rotateTop()
+                break;
+            }
+            }
+        }
+    }
 
 }

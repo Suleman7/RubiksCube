@@ -21,6 +21,7 @@ qt_add_qml_module(appRubik
         comps/Cube.qml
         assets/FullCube.qml
         comps/SOrbitCameraController.qml
+        logic/logic.js
     RESOURCES
     #assets/untitled.obj
     #assets/untitled.fbx
@@ -30,8 +31,12 @@ qt_add_qml_module(appRubik
     QML_FILES controls/CubeControls.qml
 )
 
+set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
+set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "suleman.ahmed1990@gmail.com")
+
+
 set_target_properties(appRubik PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_GUI_IDENTIFIER com.rubik.app
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE

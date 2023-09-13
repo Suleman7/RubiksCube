@@ -11,6 +11,7 @@ import QtQuick3D.Helpers
 
 import "comps"
 import "controls"
+import "logic/logic.js" as Logic
 
 Window
 {
@@ -24,106 +25,8 @@ Window
 
     property var cubeModel: ListModel {}
 
-
-    function fillModel () {
-        for (var i=0; i<=2; i++) {
-            for (var j = 0; j<=2; j++) {
-                for (var k = 0; k<=2; k++) {
-                    cubeModel.append({x: i*5, y: j*5, z: k*5,
-                                         xr: 0, yr: 0, zr: 0})
-                }
-            }
-
-        }
-    }
-
-    function rotateLeft() {
-        for (var i = 0; i<cubeModel.count; i++) {
-            const x = cubeModel.get(i).x
-            const y = cubeModel.get(i).y
-            const z = cubeModel.get(i).z
-            const xr = cubeModel.get(i).xr
-
-            if (x === 0) {
-                if (y === 0 && z === 0) {
-                    cubeModel.setProperty(i, "y", 10)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (y === 5 && z === 0) {
-                    cubeModel.setProperty(i, "y", 10)
-                    cubeModel.setProperty(i, "z", 5)
-                } else if (y === 10 && z === 0) {
-                    cubeModel.setProperty(i, "y", 10)
-                    cubeModel.setProperty(i, "z", 10)
-                } else if (y === 0 && z === 5) {
-                    cubeModel.setProperty(i, "y", 5)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (y === 10 && z === 5) {
-                    cubeModel.setProperty(i, "y", 5)
-                    cubeModel.setProperty(i, "z", 10)
-                } else if (y === 0 && z === 10) {
-                    cubeModel.setProperty(i, "y", 0)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (y === 5 && z === 10) {
-                    cubeModel.setProperty(i, "y", 0)
-                    cubeModel.setProperty(i, "z", 5)
-                } else if (y === 10 && z === 10) {
-                    cubeModel.setProperty(i, "y", 0)
-                    cubeModel.setProperty(i, "z", 10)
-                }
-
-                cubeModel.setProperty(i, "xr", xr + 90)
-            }
-
-
-        }
-    }
-
-    function rotateTop() {
-
-
-        var count = 0
-
-        for (var i = 0; i < cubeModel.count; i++) {
-            const x = cubeModel.get(i).x
-            const y = cubeModel.get(i).y
-            const z = cubeModel.get(i).z
-            const yr = cubeModel.get(i).yr
-
-
-            if (y === 10) {
-                if (x === 0 && z === 0) {
-                    cubeModel.setProperty(i, "x", 10)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (x === 5 && z === 0) {
-                    cubeModel.setProperty(i, "x", 10)
-                    cubeModel.setProperty(i, "z", 5)
-                } else if (x === 10 && z === 0) {
-                    cubeModel.setProperty(i, "x", 10)
-                    cubeModel.setProperty(i, "z", 10)
-                } else if (x === 0 && z === 5) {
-                    cubeModel.setProperty(i, "x", 5)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (x === 10 && z === 5) {
-                    cubeModel.setProperty(i, "x", 5)
-                    cubeModel.setProperty(i, "z", 10)
-                } else if (x === 0 && z === 10) {
-                    cubeModel.setProperty(i, "x", 0)
-                    cubeModel.setProperty(i, "z", 0)
-                } else if (x === 5 && z === 10) {
-                    cubeModel.setProperty(i, "x", 0)
-                    cubeModel.setProperty(i, "z", 5)
-                } else if (x === 10 && z === 10) {
-                    cubeModel.setProperty(i, "x", 0)
-                    cubeModel.setProperty(i, "z", 10)
-                }
-                cubeModel.setProperty(i, "yr", yr - 90)
-            }
-        }
-    }
-
-
     Component.onCompleted: {
-        fillModel()
+        Logic.fillModel()
     }
 
     View3D {
@@ -281,6 +184,7 @@ Window
     }
 
     OrientationGrid {
+        id: orientationGrid
         anchors.bottom: parent.bottom
 
         onTopClicked: cubeRepeater.cubeXR += 90
@@ -290,20 +194,32 @@ Window
         onReorientClicked: {cubeRepeater.cubeXR = 0; cubeRepeater.cubeYR = 0;}
     }
 
+    Button {
+        anchors.left: orientationGrid.right
+        anchors.bottom: parent.bottom
+        onClicked: {
+            Logic.shuffleCube()
+        }
+    }
+
     CubeControls {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
 
         onButtonClicked: (name) => {
             switch (name) {
-            case "R": {
-                rotateLeft()
+            case "L": {
+                Logic.rotateLeft()
                 break;
             }
 
             case "T": {
-                rotateTop()
+                Logic.rotateTop()
                 break;
+            }
+
+            case "R": {
+                Logic.rotateRight()
             }
             }
         }

@@ -16,8 +16,8 @@ import "logic/logic.js" as Logic
 Window
 {
     visible: true
-    width: 640
-    height: 480
+    width: Screen.width
+    height: Screen.height
     color: "#000000"
 
 
@@ -34,7 +34,7 @@ Window
         //anchors.fill: parent
         anchors.top: parent.top
         width: parent.width
-        height: 340
+        height: parent.height * 0.7
 
 
 
@@ -48,7 +48,8 @@ Window
             id: cubeRepeater
             model: cubeModel
 
-            pivot: Qt.vector3d(5, 5 , 5)
+            pivot: Qt.vector3d(0, 0 , 0)
+            scale: Qt.vector3d(0.8, 0.8, 0.8)
             //position: Qt.vector3d(0, 0 , 0)
 
             property int cubeXR : 0
@@ -131,34 +132,34 @@ Window
             }
         }
 
-        /*DirectionalLight {
+        DirectionalLight {
             id: light1
             color: "white"//Qt.rgba(1.0, 0.1, 0.1, 1.0)
             ambientColor: Qt.rgba(0.1, 0.1, 0.1, 1.0)
-            position: Qt.vector3d(0, 20, 0)
+            position: Qt.vector3d(20, 20, 20)
             rotation: Quaternion.fromEulerAngles(0, 0, 0)
             shadowMapQuality: Light.ShadowMapQualityHigh
             visible: true
             castsShadow: true
-            brightness: 50
-            SequentialAnimation on rotation {
-                loops: Animation.Infinite
-                QuaternionAnimation {
-                    to: Quaternion.fromEulerAngles(-45, -90, 0)
-                    duration: 2000
-                    easing.type: Easing.InOutQuad
-                }
-                QuaternionAnimation {
-                    to: Quaternion.fromEulerAngles(-135, -90, 0)
-                    duration: 2000
-                    easing.type: Easing.InOutQuad
-                }
-            }
-        }*/
+            brightness: 150
+//            SequentialAnimation on rotation {
+//                loops: Animation.Infinite
+//                QuaternionAnimation {
+//                    to: Quaternion.fromEulerAngles(-45, -90, 0)
+//                    duration: 2000
+//                    easing.type: Easing.InOutQuad
+//                }
+//                QuaternionAnimation {
+//                    to: Quaternion.fromEulerAngles(-135, -90, 0)
+//                    duration: 2000
+//                    easing.type: Easing.InOutQuad
+//                }
+//            }
+        }
 
         environment: SceneEnvironment {
-            clearColor: "#4a4a4a"
-            backgroundMode: SceneEnvironment.Color
+            clearColor: "black"//"#4a4a4a"
+            backgroundMode: SceneEnvironment.Transparent
         }
 
 
@@ -207,22 +208,36 @@ Window
         anchors.right: parent.right
 
         onButtonClicked: (name) => {
-            switch (name) {
-            case "L": {
-                Logic.rotateLeft()
-                break;
-            }
+                             switch (name) {
+                                 case "L": {
+                                     Logic.rotateLeft()
+                                     break;
+                                 }
+                                 case "L'": {
+                                     Logic.rotateLeftA()
+                                     break;
+                                 }
 
-            case "T": {
-                Logic.rotateTop()
-                break;
-            }
+                                 case "T": {
+                                     Logic.rotateTop()
+                                     break;
+                                 }
+                                 case "T'": {
+                                     Logic.rotateTopA()
+                                     break;
+                                 }
 
-            case "R": {
-                Logic.rotateRight()
-            }
-            }
-        }
+                                 case "R": {
+                                     Logic.rotateRight()
+                                     break;
+                                 }
+
+                                 case "R'": {
+                                     Logic.rotateRightA()
+                                     break;
+                                 }
+                             }
+                         }
     }
 
 }

@@ -4,7 +4,7 @@ import QtQuick3D
 Model {
     source: "assets/meshes/cube.mesh"
     eulerRotation: Qt.vector3d(0, 0, 0)
-    scale: Qt.vector3d(2, 2, 2)
+    scale: Qt.vector3d(2.4, 2.4, 2.4)
 
     property alias front_t: frontTop_material.baseColor
     property alias front_b: frontBottom_material.baseColor

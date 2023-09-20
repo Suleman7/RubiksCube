@@ -79,6 +79,12 @@ Window
                 property int yr: model.yr
                 property int zr: model.zr
                 eulerRotation: Qt.vector3d(xr, yr, zr)
+                top_color: model.top_color
+                right_color: model.right_color
+                front_color: model.front_color
+                bottom_color: model.bottom_color
+                back_color: model.back_color
+                left_color: model.left_color
 
                 //pivot: Qt.vector3d(10, 0, 0)
                 //position: Qt.vector3d(0, 0, 0)
@@ -199,7 +205,11 @@ Window
         anchors.left: orientationGrid.right
         anchors.bottom: parent.bottom
         onClicked: {
-            Logic.shuffleCube()
+            //Logic.shuffleCube()
+            for (var i = 0; i < 9; i++ ) {
+                cubeModel.setProperty(i, "front_t", "blue");
+            }
+
         }
     }
 

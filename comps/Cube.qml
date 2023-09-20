@@ -6,51 +6,52 @@ Model {
     eulerRotation: Qt.vector3d(0, 0, 0)
     scale: Qt.vector3d(2.4, 2.4, 2.4)
 
-    property alias front_t: frontTop_material.baseColor
-    property alias front_b: frontBottom_material.baseColor
-    property alias left: leftSide_material.baseColor
-    property alias right: rightSide_material.baseColor
-    property alias bottom_back: bottomSide_material.baseColor
-    property alias backSide: backSide_material.baseColor
+
+    property alias top_color: top_material.baseColor
+    property alias right_color: right_material.baseColor
+    property alias front_color: front_material.baseColor
+    property alias bottom_color: bottom_material.baseColor
+    property alias back_color: back_material.baseColor
+    property alias left_color: left_material.baseColor
 
     PrincipledMaterial {
-        id: frontTop_material
-        baseColor: "red"
+        id: bottom_material
+        //baseColor: "pink"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
-        id: frontBottom_material
-        baseColor: "green"
+        id: back_material
+        //baseColor: "green"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
-        id: leftSide_material
-        baseColor: "blue"
+        id: left_material
+        //baseColor: "white"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
-        id: rightSide_material
-        baseColor: "pink"
+        id: top_material
+        //baseColor: "yellow"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
-        id: backSide_material
-        baseColor: "orange"
+        id: right_material
+        //baseColor: "red"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
-        id: bottomSide_material
-        baseColor: "navy"
+        id: front_material
+        //baseColor: "orange"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
@@ -58,11 +59,11 @@ Model {
 
 
     materials: [
-        frontTop_material,
-        frontBottom_material,
-        leftSide_material,
-        backSide_material,
-        rightSide_material,
-        bottomSide_material
+        bottom_material,
+        left_material,
+        back_material,
+        right_material,
+        top_material,
+        front_material
     ]
 }

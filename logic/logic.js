@@ -3,7 +3,13 @@ function fillModel () {
         for (var j = 0; j<=2; j++) {
             for (var k = 0; k<=2; k++) {
                 cubeModel.append({x: i*5, y: j*5, z: k*5,
-                                     xr: 0, yr: 0, zr: 0})
+                                     xr: 0, yr: 0, zr: 0,
+                                    top_color: j == 2 ? "yellow" : "black",
+                                    right_color: i == 2 ? "green" : "black",
+                                    front_color: k == 2 ? "blue" : "black",
+                                    bottom_color: j == 0 ? "orange" : "black",
+                                    back_color: k == 0 ? "red" : "black",
+                                    left_color: i == 0 ? "pink" : "black"})
             }
         }
 

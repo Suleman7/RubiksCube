@@ -51,6 +51,10 @@ Window
             pivot: Qt.vector3d(0, 0 , 0)
             scale: Qt.vector3d(0.8, 0.8, 0.8)
             //position: Qt.vector3d(0, 0 , 0)
+            readonly property alias spaceXR: cubeRepeater.eulerRotation.x
+            readonly property alias spaceYR: cubeRepeater.eulerRotation.y
+            readonly property alias spaceZR: cubeRepeater.eulerRotation.z
+
 
             property int cubeXR : 0
             property int cubeYR : 0
@@ -78,7 +82,9 @@ Window
                 property int xr: model.xr
                 property int yr: model.yr
                 property int zr: model.zr
-                eulerRotation: Qt.vector3d(xr, yr, zr)
+                property int animationDuration: 1000
+                eulerRotation: Qt.vector3d(xr - cubeRepeater.spaceXR, yr - cubeRepeater.spaceYR, zr - cubeRepeater.spaceZR)
+
                 top_color: model.top_color
                 right_color: model.right_color
                 front_color: model.front_color
@@ -92,37 +98,37 @@ Window
 
                 Behavior on x {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                         //easing.type: Easing.OutQuint
                     }
                 }
 
                 Behavior on y {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                     }
                 }
 
                 Behavior on z {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                     }
                 }
                 Behavior on xr {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                     }
                 }
 
                 Behavior on yr {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                     }
                 }
 
                 Behavior on zr {
                     NumberAnimation {
-                        duration: 200
+                        duration: animationDuration
                     }
                 }
             }
@@ -206,9 +212,7 @@ Window
         anchors.bottom: parent.bottom
         onClicked: {
             //Logic.shuffleCube()
-            for (var i = 0; i < 9; i++ ) {
-                cubeModel.setProperty(i, "front_t", "blue");
-            }
+            Logic.fillModel()
 
         }
     }

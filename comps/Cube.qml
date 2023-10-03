@@ -3,7 +3,6 @@ import QtQuick3D
 
 Model {
     source: "assets/meshes/cube.mesh"
-    eulerRotation: Qt.vector3d(0, 0, 0)
     scale: Qt.vector3d(2.4, 2.4, 2.4)
 
 

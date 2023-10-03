@@ -1,4 +1,5 @@
 function fillModel () {
+    cubeModel.clear()
     for (var i=0; i<=2; i++) {
         for (var j = 0; j<=2; j++) {
             for (var k = 0; k<=2; k++) {
@@ -9,7 +10,8 @@ function fillModel () {
                                     front_color: k == 2 ? "blue" : "black",
                                     bottom_color: j == 0 ? "orange" : "black",
                                     back_color: k == 0 ? "red" : "black",
-                                    left_color: i == 0 ? "pink" : "black"})
+                                    left_color: i == 0 ? "pink" : "black",
+                                    realX : 1, realY : 2, realZ : 3})
             }
         }
 
@@ -28,8 +30,18 @@ function shuffleCube() {
             rotateTopA()
             rotateLeftA()
         }
-        Logic.rotateTop()
+        rotateTop()
     }
+}
+
+function coloredSidesCount(cube) {
+    return (6 - Object.values(cube).filter((v)=>(v==="black")))
+}
+
+function coloredSides(cube) {
+    var sides = []
+    var p = Object.values(cube).filter((v)=>(v !=="black" && typeof(v) === "string"))
+
 }
 
 function rotateLeft() {
@@ -65,6 +77,10 @@ function rotateLeft() {
                 cubeModel.setProperty(i, "y", 0)
                 cubeModel.setProperty(i, "z", 10)
             }
+
+            var realX = cubeModel.get(i).realX
+            var realY = cubeModel.get(i).realY
+            var realZ = cubeModel.get(i).realZ
 
             cubeModel.setProperty(i, "xr", xr + 90)
         }
@@ -105,8 +121,28 @@ function rotateLeftA() {
                 cubeModel.setProperty(i, "z", 0)
             }
 
-            cubeModel.setProperty(i, "xr", xr - 90)
-        }
+            var realX = cubeModel.get(i).realX
+            var realY = cubeModel.get(i).realY
+            var realZ = cubeModel.get(i).realZ
+            switch (Math.abs(realX)) {
+            case 1:
+                cubeModel.setProperty(i, "xr", xr - 90)
+                break;
+            case 2:
+                cubeModel.setProperty(i, "yr", yr - 90)
+                break;
+            case 3:
+                cubeModel.setProperty(i, "zr", zr - (90*realX/Math.abs(realX)))
+                break;
+            default:
+                console.log("Unknown value realY " + cubeModel.get(i).realY)
+                break;
+            }
+
+            var temp = cubeModel.get(i).realY
+
+            cubeModel.setProperty(i, "realY", cubeModel.get(i).realZ)
+            cubeModel.setProperty(i, "realZ", temp)        }
     }
 }
 
@@ -116,6 +152,13 @@ function rotateRight() {
         const y = cubeModel.get(i).y
         const z = cubeModel.get(i).z
         const xr = cubeModel.get(i).xr
+        const yr = cubeModel.get(i).yr
+        const zr = cubeModel.get(i).zr
+
+        if (i === 6) {
+            coloredSides(cubeModel.get(i))
+
+        }
 
 
         if (x === 10) {
@@ -145,7 +188,31 @@ function rotateRight() {
                 cubeModel.setProperty(i, "z", 10)
             }
 
-            cubeModel.setProperty(i, "xr", xr + 90)
+            //cubeModel.setProperty(i, "xr", xr + 90)
+
+            var realX = cubeModel.get(i).realX
+            var realY = cubeModel.get(i).realY
+            var realZ = cubeModel.get(i).realZ
+
+            switch (Math.abs(realX)) {
+            case 1:
+                cubeModel.setProperty(i, "xr", xr + (90*realX/Math.abs(realX)))
+                break;
+            case 2:
+                cubeModel.setProperty(i, "yr", yr + (90*realX/Math.abs(realX)))
+                break;
+            case 3:
+                cubeModel.setProperty(i, "zr", zr + (90*realX/Math.abs(realX )))
+                break;
+            default:
+                console.log("Unknown value realY " + cubeModel.get(i).realY)
+                break;
+            }
+
+            var temp = cubeModel.get(i).realY
+
+            cubeModel.setProperty(i, "realY", cubeModel.get(i).realZ)
+            cubeModel.setProperty(i, "realZ", -temp)
         }
     }
 }
@@ -156,6 +223,8 @@ function rotateRightA() {
         const y = cubeModel.get(i).y
         const z = cubeModel.get(i).z
         const xr = cubeModel.get(i).xr
+        const yr = cubeModel.get(i).yr
+        const zr = cubeModel.get(i).zr
 
 
         if (x === 10) {
@@ -185,7 +254,29 @@ function rotateRightA() {
                 cubeModel.setProperty(i, "z", 0)
             }
 
-            cubeModel.setProperty(i, "xr", xr - 90)
+            var realX = cubeModel.get(i).realX
+            var realY = cubeModel.get(i).realY
+            var realZ = cubeModel.get(i).realZ
+
+            switch (Math.abs(realX)) {
+            case 1:
+                cubeModel.setProperty(i, "xr", xr - (90*realX/Math.abs(realX)))
+                break;
+            case 2:
+                cubeModel.setProperty(i, "yr", yr - (90*realX/Math.abs(realX)))
+                break;
+            case 3:
+                cubeModel.setProperty(i, "zr", zr - (90*realX/Math.abs(realX)))
+                break;
+            default:
+                console.log("Unknown value realY " + cubeModel.get(i).realY)
+                break;
+            }
+
+            var temp = cubeModel.get(i).realY
+
+            cubeModel.setProperty(i, "realY", -cubeModel.get(i).realZ)
+            cubeModel.setProperty(i, "realZ", temp)
         }
     }
 }
@@ -195,7 +286,9 @@ function rotateTop() {
         const x = cubeModel.get(i).x
         const y = cubeModel.get(i).y
         const z = cubeModel.get(i).z
+        const xr = cubeModel.get(i).xr
         const yr = cubeModel.get(i).yr
+        const zr = cubeModel.get(i).zr
 
 
         if (y === 10) {
@@ -224,7 +317,35 @@ function rotateTop() {
                 cubeModel.setProperty(i, "x", 0)
                 cubeModel.setProperty(i, "z", 10)
             }
-            cubeModel.setProperty(i, "yr", yr - 90)
+
+            const realX = cubeModel.get(i).realX
+            const realY = cubeModel.get(i).realY
+            const realZ = cubeModel.get(i).realZ
+
+            switch (Math.abs(realY)) {
+
+            case 1:
+                cubeModel.setProperty(i, "xr", xr - (90*realY/Math.abs(realY)))
+                break;
+            case 2:
+                cubeModel.setProperty(i, "yr", yr - (90*realY/Math.abs(realY)))
+                break;
+            case 3:
+                cubeModel.setProperty(i, "zr", zr - (90*realY/Math.abs(realY)))
+                break;
+            default:
+                console.log("Unknown value realY " + cubeModel.get(i).realY)
+                break;
+            }
+
+            //if (realY < 0 ) {
+            //    cubeModel.setProperty(i, "realX", cubeModel.get(i).realZ)
+            //    cubeModel.setProperty(i, "realZ", -realX)
+            //} else {
+                cubeModel.setProperty(i, "realX", -cubeModel.get(i).realZ)
+                cubeModel.setProperty(i, "realZ", realX)
+            //}
+
         }
     }
 }

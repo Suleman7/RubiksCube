@@ -1,9 +1,11 @@
 import QtQuick 2.15
 import QtQuick3D
 
+
 Model {
     source: "assets/meshes/cube.mesh"
     scale: Qt.vector3d(2.4, 2.4, 2.4)
+    //scale: Qt.vector3d(20, 20, 20)
 
 
     property alias top_color: top_material.baseColor
@@ -15,42 +17,42 @@ Model {
 
     PrincipledMaterial {
         id: bottom_material
-        //baseColor: "pink"
+        baseColor: "white"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
         id: back_material
-        //baseColor: "green"
+        baseColor: "green"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
         id: left_material
-        //baseColor: "white"
+        baseColor: "orange"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
         id: top_material
-        //baseColor: "yellow"
+        baseColor: "yellow"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
         id: right_material
-        //baseColor: "red"
+        baseColor: "red"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }
 
     PrincipledMaterial {
         id: front_material
-        //baseColor: "orange"
+        baseColor: "blue"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
     }

@@ -19,13 +19,13 @@ qt_add_qml_module(appRubik
     VERSION 1.0
     QML_FILES Main.qml
         comps/Cube.qml
-        assets/FullCube.qml
         comps/SOrbitCameraController.qml
         logic/logic.js
     RESOURCES
     #assets/untitled.obj
     #assets/untitled.fbx
     assets/meshes/cube.mesh
+    assets/untitled.glb
     QML_FILES controls/OrientationGrid.qml
     RESOURCES .gitignore
     QML_FILES controls/CubeControls.qml

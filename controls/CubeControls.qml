@@ -17,7 +17,7 @@ Item {
     Grid {
         anchors.fill: parent
         Repeater {
-            model: ["T", "T'", "L", "L'", "R", "R'", "B", "B'"]
+            model: ["T", "T'", "L", "L'", "R", "R'", "F", "F'"]
             Button {
                 width: 50
                 height: 50

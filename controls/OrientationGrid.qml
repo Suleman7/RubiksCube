@@ -3,8 +3,8 @@ import QtQuick.Controls
 
 Item {
 
-    width: 130
-    height: 130
+    width: 100
+    height: 100
 
     signal topClicked
     signal leftClicked
@@ -19,8 +19,8 @@ Item {
     }
 
     Button {
-        width: 50
-        height: 50
+        width: 30
+        height: 30
 
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -29,8 +29,8 @@ Item {
     }
 
     Button {
-        width: 50
-        height: 50
+        width: 30
+        height: 30
 
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -39,8 +39,8 @@ Item {
     }
 
     Button {
-        width: 50
-        height: 50
+        width: 30
+        height: 30
 
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
@@ -49,8 +49,8 @@ Item {
     }
 
     Button {
-        width: 50
-        height: 50
+        width: 30
+        height: 30
 
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
@@ -59,8 +59,8 @@ Item {
     }
 
     Button {
-        width: 50
-        height: 50
+        width: 30
+        height: 30
 
         anchors.centerIn: parent
 

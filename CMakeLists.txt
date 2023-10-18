@@ -4,14 +4,25 @@ project(Rubik VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
+#-DCMAKE_TOOLCHAIN_FILE:PATH=/Volumes/T3/Dev/qt/official_qt/6.0.3/ios/lib/cmake/Qt6/qt.toolchain.cmake -DCMAKE_OSX_ARCHITECTURES:STRING=arm64
+#-DCMAKE_OSX_SYSROOT:STRING=iphoneos in /Volumes/T3/Dev/projects/builds/build-ios_cmake_empty_quick_project_6_0_3-Qt_6_0_3_for_iOS
+
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup()
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Quick3D)
 
-qt_add_executable(appRubik
+set(SOURCES
     main.cpp
+    c++/customqmlengine.cpp)
+set(HEADERS
+    c++/customqmlengine.h
+    )
+
+qt_add_executable(appRubik
+    ${SOURCES} ${HEADERS}
 )
 
 qt_add_qml_module(appRubik
@@ -21,6 +32,7 @@ qt_add_qml_module(appRubik
         comps/Cube.qml
         comps/SOrbitCameraController.qml
         logic/logic.js
+        MainView.qml
     RESOURCES
     #assets/untitled.obj
     #assets/untitled.fbx
@@ -31,8 +43,8 @@ qt_add_qml_module(appRubik
     QML_FILES controls/CubeControls.qml
 )
 
-set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
-set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "suleman.ahmed1990@gmail.com")
+#set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
+#set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "suleman.ahmed1990@gmail.com")
 
 
 set_target_properties(appRubik PROPERTIES

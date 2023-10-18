@@ -16,11 +16,12 @@ Item {
 
     Grid {
         anchors.fill: parent
+        spacing: 8
         Repeater {
             model: ["T", "T'", "L", "L'", "R", "R'", "F", "F'"]
             Button {
-                width: 50
-                height: 50
+                width: 40
+                height: 40
 
                 text: modelData
 

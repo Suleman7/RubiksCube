@@ -31,17 +31,21 @@ qt_add_qml_module(appRubik
     QML_FILES Main.qml
         comps/Cube.qml
         comps/SOrbitCameraController.qml
+        controls/ControlsView.qml
+        controls/CubeControls.qml
+        controls/OrientationGrid.qml
+        views/CubeView.qml
+        views/GameMenu.qml
         logic/logic.js
         MainView.qml
     RESOURCES
-    #assets/untitled.obj
-    #assets/untitled.fbx
-    assets/meshes/cube.mesh
-    assets/untitled.glb
-    QML_FILES controls/OrientationGrid.qml
-    RESOURCES .gitignore
-    QML_FILES controls/CubeControls.qml
-)
+        #assets/untitled.obj
+        #assets/untitled.fbx
+        assets/meshes/cube.mesh
+        assets/untitled.glb
+        .gitignore
+        textures/tex.png
+    )
 
 #set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
 #set(CMAKE_XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "suleman.ahmed1990@gmail.com")

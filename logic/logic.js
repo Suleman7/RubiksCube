@@ -7,15 +7,31 @@ function fillModel () {
     for (var i=0; i<=2; i++) {
         for (var j = 0; j<=2; j++) {
             for (var k = 0; k<=2; k++) {
-                //if (count === 0) {
-                cubeModel.append({x: i*5, y: j*5, z: k*5,
+                cubeModel.set(count, {x: i*5 + 10, y: j*5 + 10, z: k*5 + 10,
                                     top_color: j == 2 ? "yellow" : hiddenColor,
                                     right_color: i == 2 ? "green" : hiddenColor,
                                     front_color: k == 2 ? "blue" : hiddenColor,
                                     bottom_color: j == 0 ? "orange" : hiddenColor,
                                     back_color: k == 0 ? "red" : hiddenColor,
                                     left_color: i == 0 ? "pink" : hiddenColor})
-                //}
+                count++;
+            }
+        }
+
+    }
+
+    count = 0;
+
+    for (i=0; i<=2; i++) {
+        for (j = 0; j<=2; j++) {
+            for (k = 0; k<=2; k++) {
+                cubeModel.set(count, {x: i*5, y: j*5, z: k*5,
+                                    top_color: j == 2 ? "yellow" : hiddenColor,
+                                    right_color: i == 2 ? "green" : hiddenColor,
+                                    front_color: k == 2 ? "blue" : hiddenColor,
+                                    bottom_color: j == 0 ? "orange" : hiddenColor,
+                                    back_color: k == 0 ? "red" : hiddenColor,
+                                    left_color: i == 0 ? "pink" : hiddenColor})
                 count++;
             }
         }
@@ -61,6 +77,47 @@ function coloredSides(cube) {
     var sides = []
     var p = Object.values(cube).filter((v)=>(v !=="black" && typeof(v) === "string"))
 
+}
+
+function moveCube(name) {
+    switch (name) {
+        case "R": {
+            rotateRight()
+            break;
+        }
+        case "R'": {
+            rotateRightA()
+            break;
+        }
+
+        case "L": {
+            rotateLeft()
+            break;
+        }
+        case "L'": {
+            rotateLeftA()
+            break;
+        }
+
+        case "T": {
+            rotateTop()
+            break;
+        }
+        case "T'": {
+            rotateTopA()
+            break;
+        }
+
+        case "F": {
+            rotateFront()
+            break;
+        }
+
+        case "F'": {
+            rotateFrontA()
+            break;
+        }
+    }
 }
 
 function rotateLeft() {

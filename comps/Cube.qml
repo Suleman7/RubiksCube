@@ -3,10 +3,13 @@ import QtQuick3D
 
 
 Model {
-    source: "assets/meshes/cube.mesh"
+    source: "../assets/meshes/cube.mesh"
     scale: Qt.vector3d(2.4, 2.4, 2.4)
-    //scale: Qt.vector3d(20, 20, 20)
 
+    property alias aAnim : angleAnim
+    property int animationDuration: 100
+    property var lastRotation: Qt.quaternion(1, 0, 0, 0)
+    property var nextRotation: Qt.quaternion(0, 0, 0, 0)
 
     property alias top_color: top_material.baseColor
     property alias right_color: right_material.baseColor
@@ -55,6 +58,36 @@ Model {
         baseColor: "blue"
         cullMode: Material.NoCulling
         lighting: PrincipledMaterial.NoLighting
+    }
+
+    QuaternionAnimation {
+        id: angleAnim
+        from: cube.lastRotation
+        to: cube.nextRotation
+        duration: animationDuration
+        loops: 1
+        target: cube
+        property: "rotation"
+        onFinished: cube.lastRotation = cube.nextRotation
+        alwaysRunToEnd: true
+    }
+
+    Behavior on x {
+        NumberAnimation {
+            duration: animationDuration
+        }
+    }
+
+    Behavior on y {
+        NumberAnimation {
+            duration: animationDuration
+        }
+    }
+
+    Behavior on z {
+        NumberAnimation {
+            duration: animationDuration
+        }
     }
 
 

@@ -22,8 +22,10 @@ Item {
             onDownClicked: cubeRepeater.cubeXR -= 90
             onLeftClicked: cubeRepeater.cubeYR += 90
             onRightClicked: cubeRepeater.cubeYR -= 90
-            onReorientClicked: {cubeRepeater.cubeXR = 0; cubeRepeater.cubeYR = 0;
-                cubeRepeater.eulerRotation = Qt.vector3d(0, 0, 0)
+            onReorientClicked: {
+                cubeRepeater.cubeXR = 0
+                cubeRepeater.cubeYR = 0
+                cubeRepeater.cubeZR = 0
             }
         }
 

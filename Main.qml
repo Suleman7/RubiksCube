@@ -1,4 +1,3 @@
-// main.qml
 import QtQuick
 
 import "logic/logic.js" as Logic

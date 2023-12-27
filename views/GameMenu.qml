@@ -93,6 +93,12 @@ Item {
                 stack.push(createCubeView)
             }
         }
+
+        StyledButton {
+            buttonText: "Setting"
+            onButtonClicked: {
+            }
+        }
     }
 
 }

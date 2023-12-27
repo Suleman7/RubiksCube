@@ -40,6 +40,4 @@ Window
     Component.onCompleted: {
         Logic.fillModel()
     }
-
-
 }

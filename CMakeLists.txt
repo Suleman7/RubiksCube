@@ -4,29 +4,29 @@ project(Rubik VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 #-DCMAKE_TOOLCHAIN_FILE:PATH=/Volumes/T3/Dev/qt/official_qt/6.0.3/ios/lib/cmake/Qt6/qt.toolchain.cmake -DCMAKE_OSX_ARCHITECTURES:STRING=arm64
 #-DCMAKE_OSX_SYSROOT:STRING=iphoneos in /Volumes/T3/Dev/projects/builds/build-ios_cmake_empty_quick_project_6_0_3-Qt_6_0_3_for_iOS
 
 #find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Quick3D 3DCore)
+find_package(Qt6 REQUIRED COMPONENTS 3DCore 3DInput 3DQuick 3DQuickExtras 3DRender Core Gui Qml Quick)
 
 qt_standard_project_setup()
-
 
 set(SOURCES
     main.cpp
     c++/customqmlengine.cpp
     c++/clickableentity.cpp
-    c++/mytestclass.cpp)
+    c++/cubecreator.cpp)
 set(HEADERS
     c++/customqmlengine.h
     c++/clickableentity.h
-    c++/mytestclass.h)
+    c++/cubecreator.h)
 
 qt_add_executable(appRubik
     ${SOURCES} ${HEADERS}
 )
+
+set(RESOURCE_PREFIX "")
 
 qt_add_qml_module(appRubik
     URI Rubik
@@ -67,11 +67,15 @@ set_target_properties(appRubik PROPERTIES
 target_link_libraries(appRubik
     PRIVATE Qt6::Quick
     PUBLIC
+    Qt::3DCore
+    Qt::3DInput
+    Qt::3DQuick
+    Qt::3DQuickExtras
+    Qt::3DRender
     Qt::Core
     Qt::Gui
+    Qt::Qml
     Qt::Quick
-    Qt::Quick3D
-    Qt::3DCore
 )
 
 install(TARGETS appRubik
